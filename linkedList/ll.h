@@ -27,7 +27,7 @@ public:
     ListNodePosi(T) last() const {return trailer->pred;}
     ListNodePosi(T) insertAsFirst(T const& e);
     ListNodePosi(T) insertAsLast(T const& e);
-    //void print(); 
+    void traverse() const;
 };
 
 #endif

@@ -1,8 +1,0 @@
-/tmp/ccJuUtsI.o: In function `main':
-test.cpp:(.text+0x8c): undefined reference to `List<int>::insertAsFirst(int const&)'
-test.cpp:(.text+0xa3): undefined reference to `List<int>::print(std::ostream&)'
-test.cpp:(.text+0xb4): undefined reference to `List<int>::~List()'
-test.cpp:(.text+0xd6): undefined reference to `List<int>::~List()'
-/tmp/ccJuUtsI.o: In function `List<int>::List()':
-test.cpp:(.text._ZN4ListIiEC2Ev[_ZN4ListIiEC5Ev]+0x14): undefined reference to `List<int>::init()'
-collect2: error: ld returned 1 exit status

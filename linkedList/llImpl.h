@@ -13,14 +13,10 @@ void List<T>::init(){
 
 template<typename T>
 T List<T>::remove(ListNodePosi(T) nodePtr){
-    cout << "runing" << endl;
-    cout << first()->data << endl;
-    T d = nodePtr->data;
-    (nodePtr->pred)->succ = nodePtr->succ;
+    T d = nodePtr->data; // copy data
+    (nodePtr->pred)->succ = nodePtr->succ; 
     (nodePtr->succ)->pred = nodePtr->pred;
-    delete nodePtr; size--;
-    cout << d<< endl;
-    cout << "end" << endl;
+    delete nodePtr; nodePtr = nullptr; size--;
     return d;
 }
 
@@ -53,7 +49,7 @@ T& List<T>::operator[] (Rank r) const {
 template<typename T>
 ListNodePosi(T) List<T>::insertAsFirst(T const& e){
     ListNodePosi(T) newNodePtr = new ListNode<T>(e, header, first());
-    header->succ = newNodePtr; first()->pred = newNodePtr; size++;
+    first()->pred = newNodePtr; header->succ = newNodePtr; size++;
     return newNodePtr;
 }
 
@@ -64,12 +60,12 @@ ListNodePosi(T) List<T>::insertAsLast(T const& e){
     return newNodePtr;
 }
 
-/*template<typename T>
-void List<T>::print(){
+template<typename T>
+void List<T>::traverse() const{
     ListNodePosi(T) p = first();
-    int n = 3;
-    while(n--){
+    while(p != trailer){
         cout << p->data << ' '; 
         p = p->succ;
     }
-}*/
+    cout << endl;
+}
