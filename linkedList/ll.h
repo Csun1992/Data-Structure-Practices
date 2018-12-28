@@ -22,6 +22,7 @@ public:
     ~List();
 
     bool empty() const {return size<=0;}
+    int getSize() const {return size;}
     T& operator[] (Rank r) const;
     ListNodePosi(T) first() const {return header->succ;}
     ListNodePosi(T) last() const {return trailer->pred;}
