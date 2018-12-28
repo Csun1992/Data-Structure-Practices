@@ -8,6 +8,7 @@ using namespace std;
 class Polynomial : public List<float>{
 public:
     Polynomial operator+(Polynomial& );
+    float eval(float );
 };
 
 

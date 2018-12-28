@@ -1,4 +1,5 @@
 #include"polynomial.h"
+#include<cmath>
 using namespace std;
 
 Polynomial Polynomial::operator+(Polynomial& poly){
@@ -15,4 +16,15 @@ Polynomial Polynomial::operator+(Polynomial& poly){
         resultPolynomial.insertAsLast(d1+d2);
     }
     return resultPolynomial;
+}
+
+float Polynomial::eval(float x){
+    int degree = this->getSize() - 1;
+    float val = 0;
+    ListNodePosi(float) coeff = this->first();
+    for(int i = degree; i >= 0; --i){ 
+        val += coeff->data * pow(x, i); 
+        coeff = coeff->succ;
+    }
+    return val;
 }

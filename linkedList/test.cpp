@@ -15,5 +15,6 @@ int main(){
     for(int i = 0; i < 4; ++i) l2.insertAsLast(b[i]);
     Polynomial p = l1 + l2;
     p.traverse();
+    cout << p.eval(2) << endl;
     return 0;
 }    
