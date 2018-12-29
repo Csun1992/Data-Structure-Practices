@@ -1,6 +1,7 @@
 typedef int Rank;
 #define DEFAULT_CAPACITY 3
-
+#include<iostream>
+using namespace std;
 
 template <typename T>
 class Vector{
@@ -28,11 +29,14 @@ public:
     Rank size() const { return _size; }
     // see how clean the code is in writing the empty() function
     bool empty() const { return !_size; }
-    
-
-    
-                                                                                           
-
-
-
+    Rank find( T const& e ) const { return find( e, 0, _size ); };
+    Rank find( T const& , Rank , Rank ) const; 
+    T& operator[] (Rank ) const;
+    Vector<T> & operator=( Vector<T> const& );
+    T remove( Rank );
+    int remove( Rank lo, Rank hi );
+    Rank insert( Rank r, T const& e );
+    Rank insert(T const& e) { return insert(_size, e); }
+    int deduplicate();
+    void traverse();
 };
