@@ -1,6 +1,8 @@
 #include<iostream>
 #include<string>
 #include<cassert>
+#include<vector>
+#include"StanfordCPPLib/graphics/gwindow.h"
 using namespace std;
 
 int fact(int n) {
@@ -27,13 +29,32 @@ void printBinary(int dec) {
     }    
 }
 
+int evaluate(string& vec, int& index){
+    if( isdigit(vec[index]) ) {
+        return vec[index++] - '0';
+    } else {
+        index++; // skip the parenthesis
+        int left = evaluate(vec, index);
+        char op = vec[index];
+        index++;
+        int right = evaluate(vec, index);
+        if (vec[index++] == ')')
+            return op == '+' ? left + right : left * right;
+    }
+} 
+
+void cantorSet(GWindow& window, int x, int y, float length, int level) {
+    if (level <= 1) window.drawLine(x, y, x + length, y);
+    window.drawLine(x, y, x + length, y);
+    cantorSet(window, x, y + 20, length/3, level - 1);
+    cantorSet(window, x + 2.0 / 3.0 * length, y + 20, length / 3, level - 1);
+}
 
 
 int main() {
-    cout << fact(5) << endl;
-    cout << power(4, 3) << endl;
-    cout << isPalindrome("madam") << endl;
-    int dec = 7;
-    printBinary(7);
+    GWindow window(800, 600);
+    window.setWindowTitle("fractals -- cantor set");
+
+    cantorSet(window, 50, 50, 700, 7);
     return 0;
 }

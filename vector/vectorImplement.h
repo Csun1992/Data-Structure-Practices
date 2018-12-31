@@ -1,10 +1,13 @@
-#include "vector.h"
+#ifndef _VECTORIMPLEMENT_H_
+#define _VECTORIMPLEMENT_H_
+#include"vector.h"
+#include<iostream>
 using namespace std;
 
 template <typename T>
 void Vector<T>::copyFrom( T const* arr, Rank lo, Rank hi ) {
-    _element = new T[ _capacity = 2 * (hi - low) ]; _size = 0;
-    while(lo++ < hi) { _element[_size++] = arr[lo]; }
+    _element = new T[ _capacity = 2 * (hi - lo) ]; _size = 0;
+    while(lo < hi) { _element[_size++] = arr[lo++]; }
 }
 
 template <typename T>
@@ -57,7 +60,7 @@ Vector<T> & Vector<T>::operator=( Vector<T> const& vec ) {
 // revised the method for remvove and insert to make the method more efficient
 template <typename T>
 T Vector<T>::remove( Rank r) {
-    data = _element[r];
+    T data = _element[r];
     remove( r, r+1 );
     return data;
 }
@@ -82,16 +85,22 @@ Rank Vector<T>::insert( Rank r, T const& e ){
 
 template <typename T>
 int Vector<T>::deduplicate(){
+    int count = 0;
     for(int i = 0; i < _size; i++) {
         for(int j = 0; j < i; j++) {
             if(_element[i] == _element[j])
-                remove(j);
+                remove(j--);
+                count++;
         }
     }
+    return count;
 }
+
 template <typename T>
 void Vector<T>::traverse(){
     for(int i = 0; i < _size; i++)
         cout << _element[i] << ' ';
     cout << endl;
 }
+
+#endif

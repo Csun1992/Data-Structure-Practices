@@ -1,3 +1,6 @@
+#ifndef _VECTOR_H_
+#define _VECTOR_H_
+
 typedef int Rank;
 #define DEFAULT_CAPACITY 3
 #include<iostream>
@@ -7,7 +10,7 @@ template <typename T>
 class Vector{
 protected:
     Rank _size; int _capacity; T* _element;
-    void copyFrom( T const* , Rank , Rank );
+    void copyFrom( T const* arr, Rank lo, Rank hi );
     void expand();
     void shrink();
     Rank max( Rank , Rank ) const;
@@ -16,8 +19,10 @@ public:
     // Note how we created the default constructor. Two things worth noting are
     // 1. Use of initialization list and how we positioned the initialization list
     // 2. How we use a "for" loop to both assign initial elements and increase _size at same time
-    Vector( int cap = DEFAULT_CAPACITY, int size = 0, T init = 0 )
-    { _element = T[_capacity = cap], for(_size = 0; _size < size; _element[_size++] = init); } 
+    Vector( int cap = DEFAULT_CAPACITY, int size = 0, T init = 0 ) { 
+        _element = new T[_capacity = cap]; 
+        for(_size = 0; _size < size; _element[_size++] = init); 
+    } 
     // Note how the copy constructor just call a protected function 
     Vector( T const* arr, Rank n ) { copyFrom(arr, 0, n); }
     Vector( T const* arr, Rank lo, Rank hi ) { copyFrom(arr, lo, hi); }
@@ -38,5 +43,7 @@ public:
     Rank insert( Rank r, T const& e );
     Rank insert(T const& e) { return insert(_size, e); }
     int deduplicate();
-    void traverse();
+    void traverse(); 
 };
+
+#endif
