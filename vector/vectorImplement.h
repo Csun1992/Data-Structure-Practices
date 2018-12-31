@@ -54,15 +54,55 @@ Vector<T> & Vector<T>::operator=( Vector<T> const& vec ) {
     return *this; // careful of here that we need to return a reference to this object
 }
 
+// check again for correcteness
 template <typename T>
 T Vector<T>::remove( Rank r) {
+    T* temp = _element;
+    T data = _element[r];
+    _element = new T[--_size];
+    for(int i = 0; i <= _size; i++) {
+        if(i == r) continue;
+        _element[i] = temp[i];
+    }
+    delete temp;
+    temp = nullptr;
+    return data;
+}
 
+template <typename T>
+int Vector<T>::remove( Rank lo, Rank hi ){
+    for(int i = lo; i < hi; ++i) 
+        this->remove(i);
+}
+
+template <typename T>
+Rank Vector<T>::insert( Rank r, T const& e ){
+    T* temp = _element;
+    _element = new T[++_size];
+    for(int i = 0; i < _size; ++i) {
+        if(i == r) {
+            _element[i++] = e;
+            continue; 
+        }
+        _element[i] = temp[i-1];
+    }
+    delete temp;
+    temp = nullptr;
+    return r;
+}
+
+template <typename T>
+int Vector<T>::deduplicate(){
+    for(int i = 0; i < _size; i++) {
+        for(int j = 0; j < i; j++) {
+            if(_element[i] == _element[j])
+                remove(j);
+        }
+    }
 }
 template <typename T>
-int Vector<T>::remove( Rank lo, Rank hi );
-template <typename T>
-Rank Vector<T>::insert( Rank r, T const& e );
-template <typename T>
-int Vector<T>::deduplicate();
-template <typename T>
-void Vector<T>::traverse();
+void Vector<T>::traverse(){
+    for(int i = 0; i < _size; i++)
+        cout << _element[i] << ' ';
+    cout << endl;
+}
