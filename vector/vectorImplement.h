@@ -54,40 +54,29 @@ Vector<T> & Vector<T>::operator=( Vector<T> const& vec ) {
     return *this; // careful of here that we need to return a reference to this object
 }
 
-// check again for correcteness
+// revised the method for remvove and insert to make the method more efficient
 template <typename T>
 T Vector<T>::remove( Rank r) {
-    T* temp = _element;
-    T data = _element[r];
-    _element = new T[--_size];
-    for(int i = 0; i <= _size; i++) {
-        if(i == r) continue;
-        _element[i] = temp[i];
-    }
-    delete temp;
-    temp = nullptr;
+    data = _element[r];
+    remove( r, r+1 );
     return data;
 }
 
 template <typename T>
 int Vector<T>::remove( Rank lo, Rank hi ){
-    for(int i = lo; i < hi; ++i) 
-        this->remove(i);
+    if ( lo >= hi ) return 0;
+    while ( hi < _size  ) _element[lo++] = _element[hi++];
+    _size = lo;
+    shrink();
+    return hi - lo;
 }
 
 template <typename T>
 Rank Vector<T>::insert( Rank r, T const& e ){
-    T* temp = _element;
-    _element = new T[++_size];
-    for(int i = 0; i < _size; ++i) {
-        if(i == r) {
-            _element[i++] = e;
-            continue; 
-        }
-        _element[i] = temp[i-1];
-    }
-    delete temp;
-    temp = nullptr;
+    expand();
+    for (int i = _size++; i > r; i--) 
+        _element[i] = _element[i-1];
+    _element[r] = e;
     return r;
 }
 
